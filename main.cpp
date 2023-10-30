@@ -1,13 +1,14 @@
 #include <iostream>
+#include <utility>
 #include <vector>
 #include <string>
 #include <sstream>
 
 using namespace std;
 
-enum Suite { Inima_Rosie, Romb, Trefla, Inima_Neagra };
-enum Gen { As, Doi, Trei, Patru, Cinci, Sase, Sapte, Opt, Noua, Zece, Juvete, Regina, Rege };
-
+enum Suite { Inima_Rosie [[maybe_unused]], Romb [[maybe_unused]], Trefla [[maybe_unused]], Inima_Neagra [[maybe_unused]]
+};
+enum Gen { As, Doi [[maybe_unused]], Trei [[maybe_unused]], Patru [[maybe_unused]], Cinci [[maybe_unused]], Sase [[maybe_unused]], Sapte [[maybe_unused]], Opt [[maybe_unused]], Noua [[maybe_unused]], Zece [[maybe_unused]], Juvete [[maybe_unused]], Regina [[maybe_unused]], Rege };
 
 bool matchOpus(Suite culoare, Suite match ){
     if (culoare <= 1 && match >= 2) return true;
@@ -50,15 +51,15 @@ private:
 class Deck{
 
 public:
-    Deck(string nume){
-        this->nume = nume;
+    explicit Deck(string nume){
+        this->nume = std::move(nume);
     }
     ~Deck(){
-        for (int i=0; i < this->carti.size(); i++)
-            this->carti[i]->~Carte();
+        for (auto & i : this->carti)
+            i->~Carte();
     }
     bool Adauga_Carte(Carte* carte){
-        if(validare(carte)==true){
+        if(validare(carte)){
             this->carti.push_back(carte);
             return true;
         }
@@ -66,17 +67,17 @@ public:
     }
     friend ostream & operator << (ostream &out, const Deck &deck ){
         out << "deck: " << deck.nume << endl;
-        for(int i=0;i<deck.carti.size();i++)
-            out<< "  "<<*deck.carti[i];
+        for(auto i : deck.carti)
+            out<< "  "<<*i;
     }
 private:
     string nume;
 protected:
     Carte* damiUltimaCarte(){
-        if(this->carti.size()==0) return NULL;
+        if (this->carti.empty()) { return nullptr; }
         return this->carti.back();
     }
-    virtual bool validare(Carte *cart)
+    virtual bool validare(Carte *cart [[maybe_unused]])
     {
         return true;
     }
@@ -91,7 +92,7 @@ public:
 
 class Deck_Crescator : public Deck{
 public:
-    Deck_Crescator (Suite culoare) : Deck("crescator") {
+    explicit Deck_Crescator (Suite culoare) : Deck("crescator") {
         this->culoare = culoare;
     }
 protected:
@@ -101,7 +102,7 @@ protected:
     {
         if(this->culoare != cart->GetSuit() )return false;
 
-        if (this->damiUltimaCarte() == NULL){
+        if (this->damiUltimaCarte() == nullptr){
             if (cart->GetGen() == As) return true;
         }else {
             if( this->damiUltimaCarte()->GetGen()+1 == cart->GetGen()  ) return true;
@@ -114,33 +115,32 @@ protected:
 
 class Deck_Descrescator : public Deck{
 public:
-    Deck_Descrescator ( vector<Carte*>cartiInitiale ) : Deck("descrescator"){
-        for(int i=0;i<cartiInitiale.size();i++)
-            this->carti.push_back(cartiInitiale[i]);
+    explicit Deck_Descrescator ( const vector<Carte*>&cartiInitiale ) : Deck("descrescator"){
+        for(auto i : cartiInitiale)
+            this->carti.push_back(i);
     }
 protected:
     bool validare(Carte* cart) override{
-        if(this->damiUltimaCarte()==NULL){
+        if(this->damiUltimaCarte()==nullptr){
             if(cart->GetGen()== Rege)return true;
         }else
         if(this->damiUltimaCarte()->GetGen() == cart->GetGen() +1 && matchOpus(cart->GetSuit(),damiUltimaCarte()->GetSuit()) ) return true;
-
-        return false;
+            return  false;
     }
 
 };
 
 class Joc{
 public:
-    Joc(){
+    explicit Joc(){
         this->InitializareJoc();
     }
     ~Joc(){
-        this->ascuns->~Deck_Ascuns();
+        this->ascuns->Deck_Ascuns::~Deck_Ascuns();
         for(int i=0;i<4;i++)
-            this->crescatori[i]->~Deck_Crescator();
+            this->crescatori[i]->Deck_Crescator::~Deck_Crescator();
         for(int i=0;i<7;i++)
-            this->descrescatori[i]->~Deck_Descrescator();
+            this->descrescatori[i]->Deck_Descrescator::~Deck_Descrescator();
     }
     void InitializareJoc() {
 
@@ -172,7 +172,7 @@ public:
         }
 
         this->ascuns=new Deck_Ascuns();
-        for(int i=c;i<cartiJoc.size();i++){
+        for(int i=c; i > cartiJoc.size(); i++){
             cartiJoc[i]->Flip();
             this->ascuns->Adauga_Carte(cartiJoc[i]);
         }
@@ -181,15 +181,15 @@ public:
     friend ostream & operator << (ostream &out, const Joc &joc ){
         out << "joc: " << endl;
         out << *joc.ascuns;
-        for (int i=0; i < joc.crescatori.size(); i++ )
-            out << *joc.crescatori[i];
+        for (auto i : joc.crescatori)
+            out << *i;
 
-        for (int i=0; i < joc.descrescatori.size(); i++ )
-            out << *joc.descrescatori[i];
+        for (auto i : joc.descrescatori)
+            out << *i;
 
     }
-    vector<Carte*> aranjareRandom(vector<Carte*>v){
-        vector<Carte*> aleatoriu = v;
+    static vector<Carte*> aranjareRandom(vector<Carte*>v){
+        vector<Carte*> aleatoriu = std::move(v);
         //pe viitor
         return aleatoriu;
     }
@@ -211,14 +211,14 @@ public:
 
     }*/
 private:
-    Deck_Ascuns *ascuns;
+    Deck_Ascuns *ascuns{};
     vector<Deck_Crescator*>crescatori;
     vector<Deck_Descrescator*>descrescatori;
 };
 
 int main() {
 
-    /*Carte *cart1, *cart2, *cart3, *cart13, *cart14;
+    Carte *cart1, *cart2, *cart3, *cart13, *cart14;
     cart3 = new Carte( Inima_Rosie,  Trei, true );
 
     cart2=new Carte(Inima_Neagra,Doi,true);
@@ -258,7 +258,7 @@ int main() {
     cout<<*deck_desc;
 
 
-    */
+
 
 
 
