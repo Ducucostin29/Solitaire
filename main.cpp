@@ -70,7 +70,6 @@ public:
         for(auto i : deck.carti)
             out<< "  "<<*i;
         return out;
-
     }
 private:
     string nume;
