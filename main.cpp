@@ -54,7 +54,10 @@ public:
     explicit Deck(string nume){
         this->nume = std::move(nume);
     }
-    ~Deck()=default;
+    ~Deck(){
+        for (auto & i : this->carti)
+            delete i;
+    }
     bool Adauga_Carte(Carte* carte){
         if(validare(carte)){
             this->carti.push_back(carte);
@@ -134,7 +137,13 @@ public:
     explicit Joc(){
         this->InitializareJoc();
     }
-    ~Joc()=default;
+    ~Joc(){
+        this->ascuns->~Deck_Ascuns();
+        for(int i=0;i<4;i++)
+            delete this->crescatori[i];
+        for(int i=0;i<7;i++)
+            delete this->descrescatori[i];
+    }
     void InitializareJoc() {
 
         vector<Carte*>cartiJoc;
