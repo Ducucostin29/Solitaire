@@ -54,10 +54,7 @@ public:
     explicit Deck(string nume){
         this->nume = std::move(nume);
     }
-    ~Deck(){
-        for (auto & i : this->carti)
-            delete i;
-    }
+    ~Deck()=default;
     bool Adauga_Carte(Carte* carte){
         if(validare(carte)){
             this->carti.push_back(carte);
@@ -137,13 +134,7 @@ public:
     explicit Joc(){
         this->InitializareJoc();
     }
-    ~Joc(){
-        this->ascuns->~Deck_Ascuns();
-        for(int i=0;i<4;i++)
-            delete this->crescatori[i];
-        for(int i=0;i<7;i++)
-            delete this->descrescatori[i];
-    }
+    ~Joc()=default;
     void InitializareJoc() {
 
         vector<Carte*>cartiJoc;
@@ -174,7 +165,7 @@ public:
         }
 
         this->ascuns=new Deck_Ascuns();
-        for(long long unsigned int i=c; i > cartiJoc.size(); i++){
+        for(long long unsigned int i=c; i < cartiJoc.size(); i++){
             cartiJoc[i]->Flip();
             this->ascuns->Adauga_Carte(cartiJoc[i]);
         }
@@ -220,7 +211,7 @@ private:
 
 int main() {
 
-    Carte *cart1, *cart2, *cart3, *cart13, *cart14;
+    /*Carte *cart1, *cart2, *cart3, *cart13, *cart14;
     cart3 = new Carte( Inima_Rosie,  Trei, true );
 
     cart2=new Carte(Inima_Neagra,Doi,true);
@@ -263,7 +254,7 @@ int main() {
 
 
 
-
+    */
     Joc *joc;
     joc=new Joc();
     cout << *joc;
