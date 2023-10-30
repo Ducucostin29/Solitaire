@@ -69,6 +69,7 @@ public:
         out << "deck: " << deck.nume << endl;
         for(auto i : deck.carti)
             out<< "  "<<*i;
+        return out;
     }
 private:
     string nume;
@@ -172,7 +173,7 @@ public:
         }
 
         this->ascuns=new Deck_Ascuns();
-        for(int i=c; i > cartiJoc.size(); i++){
+        for(long long int i=c; i > cartiJoc.size(); i++){
             cartiJoc[i]->Flip();
             this->ascuns->Adauga_Carte(cartiJoc[i]);
         }
@@ -186,7 +187,7 @@ public:
 
         for (auto i : joc.descrescatori)
             out << *i;
-
+        return out;
     }
     static vector<Carte*> aranjareRandom(vector<Carte*>v){
         vector<Carte*> aleatoriu = std::move(v);
