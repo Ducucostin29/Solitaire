@@ -174,7 +174,7 @@ public:
         }
 
         this->ascuns=new Deck_Ascuns();
-        for(long long int i=c; i > cartiJoc.size(); i++){
+        for(long long unsigned int i=c; i > cartiJoc.size(); i++){
             cartiJoc[i]->Flip();
             this->ascuns->Adauga_Carte(cartiJoc[i]);
         }
