@@ -191,7 +191,7 @@ public:
         return out;
     }
     static vector<Carte*> aranjareRandom(vector<Carte*> & v){
-        vector<Carte*> &aleatoriu = v;
+        vector<Carte*> const &aleatoriu = v;
         //pe viitor
         return aleatoriu;
     }
