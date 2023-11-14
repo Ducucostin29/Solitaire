@@ -1,9 +1,10 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include <sstream>
 #include <random>
 #include <ctime>
+#include "EroareaMea.h"
+#include "Carte.h"
 
 using namespace std;
 
@@ -11,37 +12,6 @@ const unsigned int seed = time(nullptr);
 mt19937_64 rng(seed);
 uniform_int_distribution<unsigned long long int> uniformIntDistribution;
 
-class EroareaMea : public exception{
-public:
-    explicit EroareaMea(char* msg){
-        this->msg = msg;
-    }
-    char* afiseaza(){
-        return this->msg;
-    }
-private:
-    char* msg;
-};
-
-enum Suite {
-    Inima_Rosie [[maybe_unused]], Romb [[maybe_unused]], Trefla [[maybe_unused]], Inima_Neagra [[maybe_unused]]
-};
-
-enum Gen {
-    As,
-    Doi [[maybe_unused]],
-    Trei [[maybe_unused]],
-    Patru [[maybe_unused]],
-    Cinci [[maybe_unused]],
-    Sase [[maybe_unused]],
-    Sapte [[maybe_unused]],
-    Opt [[maybe_unused]],
-    Noua [[maybe_unused]],
-    Zece [[maybe_unused]],
-    Juvete [[maybe_unused]],
-    Regina [[maybe_unused]],
-    Rege
-};
 
 bool matchOpus(Suite culoare, Suite match) {
     if (culoare <= 1 && match >= 2) return true;
@@ -50,39 +20,7 @@ bool matchOpus(Suite culoare, Suite match) {
 }
 
 
-class Carte {
-public:
-    Carte(Suite s, Gen g, bool carteinsus) : suit(s), gen(g), CarteinSus(carteinsus) {}
 
-    void Flip() { CarteinSus = !CarteinSus; }
-
-    Gen GetGen() {
-        return this->gen;
-    }
-
-    Suite GetSuit() {
-        return this->suit;
-    }
-
-    friend ostream &operator<<(ostream &out, const Carte &carte) {
-
-        ostringstream str;
-        if (carte.CarteinSus) {
-            const string suite[] = {"Inima_Rosie", "Romb", "Trefla", "Inima_Neagra"};
-            const string gene[] = {"As", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
-            str << gene[carte.gen] << " " << suite[carte.suit] << endl;
-        } else {
-            str << "Cu fata in jos" << endl;
-        }
-        out << str.str();
-        return out;
-    }
-
-private:
-    Suite suit;
-    Gen gen;
-    bool CarteinSus;
-};
 
 class Deck {
 
@@ -295,7 +233,7 @@ public:
 
     void mutari(){
 
-        bool ok = true;
+        bool ok = false;
         while (ok){
 
             cout << "Status joc: ";
