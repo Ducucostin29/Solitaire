@@ -111,6 +111,10 @@ protected:
         return true;
     }
 
+    virtual bool finalizat(){
+        return true;
+    }
+
     vector<Carte *> carti;
 };
 
@@ -118,12 +122,28 @@ class Deck_Ascuns : public Deck {
 public:
     Deck_Ascuns() : Deck("ascuns") {
     }
+
+    bool finalizat()  override {
+        return this->carti.empty();
+    }
+
 };
 
 class Deck_Crescator : public Deck {
 public:
     explicit Deck_Crescator(Suite culoare) : Deck("crescator") {
         this->culoare = culoare;
+    }
+
+    bool finalizat()  override {
+
+        if (this->carti.size() != 13) return false;
+
+        for (unsigned long long i = 0; i < this->carti.size()-1; i++){
+            if (this->carti[i]->GetGen() >= this->carti[i+1]->GetGen())
+                return false;
+        }
+        return true;
     }
 
 protected:
@@ -149,6 +169,11 @@ public:
         for (auto i: cartiInitiale)
             this->carti.push_back(i);
     }
+
+    bool finalizat()  override {
+        return this->carti.empty();
+    }
+
 
 protected:
     bool validare(Carte *cart) override {
@@ -244,23 +269,17 @@ public:
         }
         return aleatoriu;
     }
-    /*bool castigare(){
-        for (int i = 0; i < crescatori.size(); i++) {
-       if (crescatori[i]->carti.size() < 13) {
-           return false;
-       }
-   }
-   for (int i = 0; i < descrescatori.size(); i++) {
-       if (descrescatori[i]->carti.size() > 0) {
-           return false;
-       }
-   }
-   if (ascuns->carti.size() > 0) {
-       return false;
-   }
-   return true;
 
-    }*/
+    bool castigare(){
+        if (!this->ascuns->finalizat()) return false;
+        for ( Deck_Crescator* const it : this->crescatori ){
+            if (!it->finalizat()) return false;
+        }
+        for ( Deck_Descrescator* const it : this->descrescatori){
+            if (!it->finalizat()) return false;
+        }
+        return true ;
+    }
 private:
     Deck_Ascuns *ascuns{};
     vector<Deck_Crescator *> crescatori;
@@ -317,6 +336,12 @@ int main() {
     Joc *joc;
     joc = new Joc();
     cout << *joc;
+
+    cout << "Status joc: ";
+    if (!joc->castigare()) cout << "NE";
+
+    cout << "CASTIGATOR" << endl;
+
     delete joc;
 
     return 0;
