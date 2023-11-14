@@ -294,12 +294,15 @@ public:
     }
 
     void mutari(){
-        while (1 == 1){
+
+        bool ok = true;
+        while (ok){
 
             cout << "Status joc: ";
             if (!this->castigare()) cout << "NECASTIGATOR";
             else {
                 cout << "CASITGATOR!!!!" << endl;
+                ok = false;
                 break;
             }
 
