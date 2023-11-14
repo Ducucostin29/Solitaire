@@ -303,7 +303,7 @@ public:
             else {
                 cout << "CASITGATOR!!!!" << endl;
                 ok = false;
-                break;
+                continue;
             }
 
             cout << "Vrei sa muti o carte? y/n" << endl;
@@ -313,6 +313,7 @@ public:
                 this->mutaCarte();
             if (optiune == "n")
                 break;
+
 
         }
     }
