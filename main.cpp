@@ -1,5 +1,4 @@
 #include <iostream>
-#include <utility>
 #include <vector>
 #include <string>
 #include <sstream>
@@ -51,8 +50,8 @@ private:
 class Deck{
 
 public:
-    explicit Deck(string nume){
-        this->nume = std::move(nume);
+    explicit Deck(const char *nume){
+        this->nume = nume;
     }
     virtual ~Deck() {
         for (auto & i : this->carti)
@@ -191,8 +190,8 @@ public:
             out << *i;
         return out;
     }
-    static vector<Carte*> aranjareRandom(vector<Carte*>v){
-        vector<Carte*> aleatoriu = std::move(v);
+    static vector<Carte*> aranjareRandom(vector<Carte*> & v){
+        vector<Carte*> &aleatoriu = v;
         //pe viitor
         return aleatoriu;
     }
