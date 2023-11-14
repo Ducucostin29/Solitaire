@@ -31,8 +31,8 @@ public:
 
         ostringstream str;
         if (carte.CarteinSus) {
-            string suite[] = { "Inima_Rosie", "Romb", "Trefla", "Inima_Neagra" };
-            string gene[] = { "As", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K" };
+            const string suite[] = { "Inima_Rosie", "Romb", "Trefla", "Inima_Neagra" };
+            const string gene[] = { "As", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K" };
             str<< gene[carte.gen] << " " << suite[carte.suit] << endl;
         }
         else {
@@ -64,7 +64,7 @@ public:
     }
     friend ostream & operator << (ostream &out, const Deck &deck ){
         out << "deck: " << deck.nume << endl;
-        for(auto i : deck.carti)
+        for(Carte *const i : deck.carti)
             out<< "  "<<*i;
         return out;
 
@@ -174,10 +174,10 @@ public:
     friend ostream & operator << (ostream &out, const Joc &joc ){
         out << "joc: " << endl;
         out << *joc.ascuns;
-        for (auto i : joc.crescatori)
+        for (Deck_Crescator *const i : joc.crescatori)
             out << *i;
 
-        for (auto i : joc.descrescatori)
+        for (Deck_Descrescator *const  i : joc.descrescatori)
             out << *i;
         return out;
     }
