@@ -138,7 +138,7 @@ public:
         this->InitializareJoc();
     }
     ~Joc(){
-        this->ascuns->~Deck_Ascuns();
+        delete this->ascuns;
         for(int i=0;i<4;i++)
             delete this->crescatori[i];
         for(int i=0;i<7;i++)
