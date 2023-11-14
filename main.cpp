@@ -11,9 +11,22 @@ const unsigned int seed = time(nullptr);
 mt19937_64 rng(seed);
 uniform_int_distribution<unsigned long long int> uniformIntDistribution;
 
+class EroareaMea : public exception{
+public:
+    explicit EroareaMea(char* msg){
+        this->msg = msg;
+    }
+    char* afiseaza(){
+        return this->msg;
+    }
+private:
+    char* msg;
+};
+
 enum Suite {
     Inima_Rosie [[maybe_unused]], Romb [[maybe_unused]], Trefla [[maybe_unused]], Inima_Neagra [[maybe_unused]]
 };
+
 enum Gen {
     As,
     Doi [[maybe_unused]],
@@ -74,8 +87,10 @@ private:
 class Deck {
 
 public:
-    explicit Deck(const char *nume) {
+    explicit Deck(const char *nume, int indice, unsigned long long int cartiNecesareCatig) {
         this->nume = nume;
+        this->indice = indice;
+        this->cartiNecesareCatig = cartiNecesareCatig;
     }
 
     virtual ~Deck() {
@@ -92,52 +107,54 @@ public:
     }
 
     friend ostream &operator<<(ostream &out, const Deck &deck) {
-        out << "deck: " << deck.nume << endl;
+        out << deck.nume << " "<< deck.indice+1 << endl;
         for (Carte *const i: deck.carti)
             out << "  " << *i;
         return out;
-
     }
 
-private:
-    string nume;
-protected:
+
+    virtual bool finalizat(){
+        return this->carti.size() == this->cartiNecesareCatig;
+    };
+
     Carte *damiUltimaCarte() {
         if (this->carti.empty()) { return nullptr; }
         return this->carti.back();
     }
 
-    virtual bool validare(Carte *cart [[maybe_unused]]) {
-        return true;
-    }
+protected:
+    string nume;
+    int indice;
+    unsigned long long int cartiNecesareCatig;
+protected:
 
-    virtual bool finalizat(){
-        return true;
-    }
+    virtual bool validare(Carte *cart ) =0;
 
     vector<Carte *> carti;
 };
 
 class Deck_Ascuns : public Deck {
 public:
-    Deck_Ascuns() : Deck("ascuns") {
+    Deck_Ascuns() : Deck("ascuns", 0, 0){
     }
 
-    bool finalizat()  override {
-        return this->carti.empty();
+protected:
+    bool validare(Carte *) override {
+        return true;
     }
 
 };
 
 class Deck_Crescator : public Deck {
 public:
-    explicit Deck_Crescator(Suite culoare) : Deck("crescator") {
+    explicit Deck_Crescator(Suite culoare, int indice) : Deck("crescator", indice, 13) {
         this->culoare = culoare;
     }
 
     bool finalizat()  override {
 
-        if (this->carti.size() != 13) return false;
+        if (!Deck::finalizat()) return false;
 
         for (unsigned long long i = 0; i < this->carti.size()-1; i++){
             if (this->carti[i]->GetGen() >= this->carti[i+1]->GetGen())
@@ -145,6 +162,7 @@ public:
         }
         return true;
     }
+
 
 protected:
     Suite culoare;
@@ -158,22 +176,16 @@ protected:
             if (this->damiUltimaCarte()->GetGen() + 1 == cart->GetGen()) return true;
         }
 
-
         return false;
     }
 };
 
 class Deck_Descrescator : public Deck {
 public:
-    explicit Deck_Descrescator(const vector<Carte *> &cartiInitiale) : Deck("descrescator") {
+    explicit Deck_Descrescator(const vector<Carte *> &cartiInitiale, int indice) : Deck("descrescator", indice, 0) {
         for (auto i: cartiInitiale)
             this->carti.push_back(i);
     }
-
-    bool finalizat()  override {
-        return this->carti.empty();
-    }
-
 
 protected:
     bool validare(Carte *cart) override {
@@ -216,18 +228,18 @@ public:
         vector <Carte*> cartiJocAleatorii = aranjareRandom(cartiJoc);
 
         for (int i = 0; i < 4; i++)
-            this->crescatori.push_back(new Deck_Crescator(Suite(i)));
+            this->crescatori.push_back(new Deck_Crescator(Suite(i), i));
 
         int c = 0;
         for (int i = 0; i < 7; i++) {
             vector<Carte *> cartiInitiale;
-            for (int j = 0; j < i; j++) {
-                if (j != i - 1) cartiJocAleatorii[c]->Flip();
+            for (int j = 0; j <= i; j++) {
+                if (j != i ) cartiJocAleatorii[c]->Flip();
 
                 cartiInitiale.push_back(cartiJocAleatorii[c]);
                 c++;
             }
-            this->descrescatori.push_back(new Deck_Descrescator(cartiInitiale));
+            this->descrescatori.push_back(new Deck_Descrescator(cartiInitiale, i));
         }
 
         this->ascuns = new Deck_Ascuns();
@@ -280,10 +292,63 @@ public:
         }
         return true ;
     }
+
+    void mutari(){
+        while (1 == 1){
+
+            cout << "Status joc: ";
+            if (!this->castigare()) cout << "NECASTIGATOR";
+            else {
+                cout << "CASITGATOR!!!!" << endl;
+                break;
+            }
+
+            cout << "Vrei sa muti o carte? y/n" << endl;
+            string optiune;
+            cin >> optiune;
+            if ( optiune == "y")
+                this->mutaCarte();
+            if (optiune == "n")
+                break;
+
+        }
+    }
+
 private:
     Deck_Ascuns *ascuns{};
     vector<Deck_Crescator *> crescatori;
     vector<Deck_Descrescator *> descrescatori;
+
+
+
+    void mutaCarte(){
+        try{
+            cout << "selecteaza deck de unde vrei sa muti: "<< endl;
+            int deUnde;
+            cin >> deUnde;
+
+            if (deUnde < 1) throw EroareaMea((char*)"Deck selectat prea mic. Nr trebuie sa fie mare decat 0");
+            if (deUnde > 7) throw EroareaMea((char*)"Deck selectat prea mare. Nr trb sa fie mai mic decat 8");
+
+            cout << "selecteaza deck unde vrei sa o muti: "<<endl;
+            int unde;
+            cin >> unde;
+
+            if (unde < 1) throw EroareaMea((char*)"Deck selectat prea mic. Nr trebuie sa fie mare decat 0");
+            if (unde > 7) throw EroareaMea((char*)"Deck selectat prea mare. Nr trb sa fie mai mic decat 8");
+
+            Carte* carteSelectata = this->descrescatori[deUnde-1]->damiUltimaCarte();
+            if ( this->descrescatori[unde-1]->Adauga_Carte(carteSelectata) ){
+                cout << "Cartea a fost mutata cu success " << endl;
+                cout << *this;
+            }
+            else throw EroareaMea((char*)"Nu se poate \n");
+
+        }catch( EroareaMea &err ){
+            cout << "EROARE =" << err.afiseaza();
+        }
+    }
+
 };
 
 int main() {
@@ -337,10 +402,9 @@ int main() {
     joc = new Joc();
     cout << *joc;
 
-    cout << "Status joc: ";
-    if (!joc->castigare()) cout << "NE";
+    joc->mutari();
 
-    cout << "CASTIGATOR" << endl;
+
 
     delete joc;
 
