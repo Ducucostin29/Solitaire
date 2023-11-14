@@ -9,7 +9,7 @@
 
 class EroareaMea  : public std::exception{
 public:
-    EroareaMea(char* msg);
+    explicit EroareaMea(char* msg);
     char* afiseaza();
 private:
     char* msg;

@@ -233,7 +233,7 @@ public:
 
     void mutari(){
 
-        bool ok = false;
+        bool ok = true;
         while (ok){
 
             cout << "Status joc: ";
@@ -252,6 +252,7 @@ public:
             if (optiune == "n")
                 break;
 
+            return;
 
         }
     }

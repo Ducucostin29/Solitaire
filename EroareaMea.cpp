@@ -4,7 +4,7 @@
 
 #include "EroareaMea.h"
 
-EroareaMea::EroareaMea(char* msg){
+ EroareaMea::EroareaMea(char* msg){
     this->msg = msg;
 }
 
