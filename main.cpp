@@ -3,8 +3,8 @@
 #include <string>
 #include <random>
 #include <ctime>
-#include "EroareaMea.h"
-#include "Carte.h"
+#include "h/EroareaMea.h"
+#include "h/Carte.h"
 
 using namespace std;
 

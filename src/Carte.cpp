@@ -2,7 +2,7 @@
 // Created by User on 11/14/2023.
 //
 
-#include "Carte.h"
+#include "../h/Carte.h"
 
 Gen Carte::GetGen() {
     return this->gen;

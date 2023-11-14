@@ -2,7 +2,7 @@
 // Created by User on 11/14/2023.
 //
 
-#include "EroareaMea.h"
+#include "../h/EroareaMea.h"
 
  EroareaMea::EroareaMea(char* msg){
     this->msg = msg;
