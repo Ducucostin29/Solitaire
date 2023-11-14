@@ -268,7 +268,7 @@ int main() {
     Joc *joc;
     joc=new Joc();
     cout << *joc;
-    joc->~Joc();
+    delete joc;
 
     return 0;
 }
