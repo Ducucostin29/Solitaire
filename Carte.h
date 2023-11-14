@@ -9,8 +9,8 @@
 #include <string>
 #include <sstream>
 
-#include "suite.h"
-#include "gen.h"
+#include "Suite.h"
+#include "Gen.h"
 
 using namespace std;
 
