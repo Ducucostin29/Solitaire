@@ -140,9 +140,10 @@ public:
     ~Joc(){
         this->ascuns->~Deck_Ascuns();
         for(int i=0;i<4;i++)
-            this->crescatori[i]->~Deck_Crescator();
+            delete this->crescatori[i];
         for(int i=0;i<7;i++)
-            this->descrescatori[i]->~Deck_Descrescator();
+            delete this->descrescatori[i];
+
     }
     void InitializareJoc() {
 
