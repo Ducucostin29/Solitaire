@@ -2,8 +2,14 @@
 #include <vector>
 #include <string>
 #include <sstream>
+#include <random>
+#include <ctime>
 
 using namespace std;
+
+const unsigned int seed = time(nullptr);
+mt19937_64 rng(seed);
+uniform_int_distribution<unsigned long long int> uniformIntDistribution;
 
 enum Suite {
     Inima_Rosie [[maybe_unused]], Romb [[maybe_unused]], Trefla [[maybe_unused]], Inima_Neagra [[maybe_unused]]
@@ -182,8 +188,7 @@ public:
             }
         }
 
-        cartiJoc = aranjareRandom(cartiJoc);
-
+        vector <Carte*> cartiJocAleatorii = aranjareRandom(cartiJoc);
 
         for (int i = 0; i < 4; i++)
             this->crescatori.push_back(new Deck_Crescator(Suite(i)));
@@ -192,18 +197,18 @@ public:
         for (int i = 0; i < 7; i++) {
             vector<Carte *> cartiInitiale;
             for (int j = 0; j < i; j++) {
-                if (j != i - 1) cartiJoc[c]->Flip();
+                if (j != i - 1) cartiJocAleatorii[c]->Flip();
 
-                cartiInitiale.push_back(cartiJoc[c]);
+                cartiInitiale.push_back(cartiJocAleatorii[c]);
                 c++;
             }
             this->descrescatori.push_back(new Deck_Descrescator(cartiInitiale));
         }
 
         this->ascuns = new Deck_Ascuns();
-        for (long long unsigned int i = c; i < cartiJoc.size(); i++) {
-            cartiJoc[i]->Flip();
-            this->ascuns->Adauga_Carte(cartiJoc[i]);
+        for (long long unsigned int i = c; i < cartiJocAleatorii.size(); i++) {
+            cartiJocAleatorii[i]->Flip();
+            this->ascuns->Adauga_Carte(cartiJocAleatorii[i]);
         }
 
     }
@@ -220,8 +225,23 @@ public:
     }
 
     static vector<Carte *> aranjareRandom(vector<Carte *> const &v) {
-        vector<Carte *> const &aleatoriu = v;
-        //pe viitor
+
+        vector<Carte *> aleatoriu;
+        vector<bool> selectat;
+
+        for (unsigned long long int i =0; i < v.size(); i++ ){
+            selectat.push_back(false);
+            aleatoriu.push_back(nullptr);
+        }
+
+        for(  Carte * it : v){
+            unsigned long long int pozitie = uniformIntDistribution(rng) %  v.size();
+            while (selectat[pozitie]){
+                pozitie = uniformIntDistribution(rng) %  v.size();
+            }
+            selectat[pozitie] = true;
+            aleatoriu[pozitie] = it;
+        }
         return aleatoriu;
     }
     /*bool castigare(){
@@ -248,6 +268,7 @@ private:
 };
 
 int main() {
+
 
     /*Carte *cart1, *cart2, *cart3, *cart13, *cart14;
     cart3 = new Carte( Inima_Rosie,  Trei, true );
