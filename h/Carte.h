@@ -8,11 +8,10 @@
 #include <ostream>
 #include <string>
 #include <sstream>
-
 #include "Suite.h"
 #include "Gen.h"
 
-using namespace std;
+
 
 class Carte {
 public:
@@ -24,15 +23,15 @@ public:
 
     void Flip();
 
-    friend ostream &operator<<(ostream &out, const Carte &carte) {
+    friend std::ostream &operator<<(std::ostream &out, const Carte &carte) {
 
-        ostringstream str;
+        std::ostringstream str;
         if (carte.CarteinSus) {
-            const string suite[] = {"Inima_Rosie", "Romb", "Trefla", "Inima_Neagra"};
-            const string gene[] = {"As", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
-            str << gene[carte.gen] << " " << suite[carte.suit] << endl;
+            const std::string suite[] = {"Inima_Rosie", "Romb", "Trefla", "Inima_Neagra"};
+            const std::string gene[] = {"As", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
+            str << gene[carte.gen] << " " << suite[carte.suit] <<std::endl;
         } else {
-            str << "Cu fata in jos" << endl;
+            str << "Cu fata in jos" << std::endl;
         }
         out << str.str();
         return out;
@@ -43,6 +42,4 @@ private:
     Gen gen;
     bool CarteinSus;
 };
-
-
 #endif //OOP_CARTE_H
