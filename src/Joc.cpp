@@ -3,6 +3,14 @@
 //
 
 #include "../h/Joc.h"
+#include <iostream>
+#include <random>
+#include <ctime>
+
+const unsigned int seed = time(nullptr);
+std::mt19937_64 rng(seed);
+std::uniform_int_distribution<unsigned long int> uniformIntDistribution;
+
 
 
 void Joc::InitializareJoc() {
@@ -41,7 +49,7 @@ void Joc::InitializareJoc() {
 
 }
 
- /*std::vector<Carte *>Joc::aranjareRandom(const std::vector<Carte *> &v) {
+ std::vector<Carte *>Joc::aranjareRandom(const std::vector<Carte *> &v) {
 
     std::vector<Carte *> aleatoriu;
     std::vector<bool> selectat;
@@ -51,7 +59,7 @@ void Joc::InitializareJoc() {
         aleatoriu.push_back(nullptr);
     }
 
-    /for(  Carte * it : v){
+    for(  Carte * it : v){
         unsigned long long int pozitie = uniformIntDistribution(rng) %  v.size();
         while (selectat[pozitie]){
             pozitie = uniformIntDistribution(rng) %  v.size();
@@ -60,7 +68,7 @@ void Joc::InitializareJoc() {
         aleatoriu[pozitie] = it;
     }
     return aleatoriu;
-}*/
+}
 
 bool Joc::castigare(){
     if (!this->ascuns->Deck::finalizat()) return false;

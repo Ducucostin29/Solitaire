@@ -42,7 +42,7 @@ public:
         return out;
     }
 
-    //static std::vector<Carte *> aranjareRandom(std::vector<Carte *> const &v);
+    static std::vector<Carte *> aranjareRandom(std::vector<Carte *> const &v);
 
     bool castigare();
 

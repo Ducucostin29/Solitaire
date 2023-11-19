@@ -9,6 +9,7 @@
 #include "MatchOpus.h"
 
 
+
 class Deck_Descrescator : public Deck {
 public:
     explicit Deck_Descrescator(const std::vector<Carte *> &cartiInitiale, int indice) : Deck("descrescator", indice, 0) {
@@ -21,11 +22,9 @@ protected:
         if (this->damiUltimaCarte() == nullptr) {
             if (cart->GetGen() == Rege)return true;
         } else if (this->damiUltimaCarte()->GetGen() == cart->GetGen() + 1 &&
-                   matchOpus(cart->GetSuit(), damiUltimaCarte()->GetSuit()))
+                  matchOpus(cart->GetSuit(), damiUltimaCarte()->GetSuit()))
             return true;
         return false;
     }
-
 };
-
 #endif //OOP_DECK_DESCRESCATOR_H
