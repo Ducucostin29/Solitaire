@@ -15,44 +15,43 @@
 #include "../h/Deck_Crescator.h"
 
 
-class Joc {
+class Game {
 public:
-    explicit Joc() {
-        this->InitializareJoc();
+    explicit Game() {
+        this->GameInitialization();
     }
 
-    ~Joc() {
-        delete this->ascuns;
+    ~Game() {
+        delete this->hidden;
         for (int i = 0; i < 4; i++)
-            delete this->crescatori[i];
+            delete this->breed[i];
         for (int i = 0; i < 7; i++)
-            delete this->descrescatori[i];
+            delete this->desc[i];
 
     }
-    void InitializareJoc();
+    void GameInitialization();
 
-    friend std::ostream &operator<<(std::ostream &out, const Joc &joc) {
+    friend std::ostream &operator<<(std::ostream &out, const Game &game) {
         out << "joc: " << std::endl;
-        out << *joc.ascuns;
-        for (Deck_Crescator *const i: joc.crescatori)
+        out << *game.hidden;
+        for (BreedingBord *const i: game.breed)
             out << *i;
-
-        for (Deck_Descrescator *const i: joc.descrescatori)
+        for (DescendingBord *const i: game.desc)
             out << *i;
         return out;
     }
 
-    //static std::vector<Carte *> aranjareRandom(std::vector<Carte *> const &v);
+    static std::vector<Card *> Random(std::vector<Card *> const &v);
 
-    bool castigare();
+    bool Win();
 
-    void mutari();
+    void Moves();
 
 private:
-    Deck_Ascuns *ascuns{};
-    std::vector<Deck_Crescator *> crescatori;
-    std::vector<Deck_Descrescator *> descrescatori;
-    void mutaCarte();
+    HiddenBord *hidden{};
+    std::vector<BreedingBord *> breed;
+    std::vector<DescendingBord *> desc;
+    void MoveCard();
 };
 
 

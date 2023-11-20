@@ -4,10 +4,10 @@
 
 #include "../h/EroareaMea.h"
 
- EroareaMea::EroareaMea(char* msg){
+MyError::MyError(char* msg){
     this->msg = msg;
 }
 
-char* EroareaMea::afiseaza(){
+char* MyError::afis(){
     return this->msg;
 }

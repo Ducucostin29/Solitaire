@@ -4,15 +4,15 @@
 
 #include "../h/Deck.h"
 
-    bool Deck :: Adauga_Carte(Carte *carte){
-        if (validare(carte)) {
-            this->carti.push_back(carte);
+    bool Deck :: AddCard(Card *carte){
+        if (validation(carte)) {
+            this->cards.push_back(carte);
             return true;
         }
         return false;
     }
 
-    bool Deck :: finalizat(){
-        return this->carti.size() == this->cartiNecesareCatig;
+    bool Deck :: completed(){
+        return this->cards.size() == this->cardsNeed;
     }
 

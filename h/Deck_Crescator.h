@@ -8,18 +8,18 @@
 #include "Carte.h"
 
 
-class Deck_Crescator : public Deck {
+class BreedingBord : public Deck {
 public:
-    explicit Deck_Crescator(Suite culoare, int indice) : Deck("crescator", indice, 13) {
-        this->culoare = culoare;
+    explicit BreedingBord(Suite color, int index) : Deck("ascedenting", index, 13) {
+        this->color = color;
     }
 
-    bool finalizat()  override {
+    bool completed()  override {
 
-        if (!Deck::finalizat()) return false;
+        if (!Deck::completed()) return false;
 
-        for (unsigned long long i = 0; i < this->carti.size()-1; i++){
-            if (this->carti[i]->GetGen() >= this->carti[i+1]->GetGen())
+        for (unsigned long long i = 0; i < this->cards.size()-1; i++){
+            if (this->cards[i]->GetGen() >= this->cards[i+1]->GetGen())
                 return false;
         }
         return true;
@@ -27,15 +27,15 @@ public:
 
 
 protected:
-    Suite culoare;
+    Suite color;
 
-    bool validare(Carte *cart) override {
-        if (this->culoare != cart->GetSuit())return false;
+    bool validation(Card *cart) override {
+        if (this->color != cart->GetSuit())return false;
 
-        if (this->damiUltimaCarte() == nullptr) {
-            if (cart->GetGen() == As) return true;
+        if (this->giveLastCard() == nullptr) {
+            if (cart->GetGen() == Ace) return true;
         } else {
-            if (this->damiUltimaCarte()->GetGen() + 1 == cart->GetGen()) return true;
+            if (this->giveLastCard()->GetGen() + 1 == cart->GetGen()) return true;
         }
 
         return false;

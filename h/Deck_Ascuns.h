@@ -7,13 +7,13 @@
 #include "Deck.h"
 
 
-class Deck_Ascuns : public Deck {
+class HiddenBord : public Deck {
 public:
-    Deck_Ascuns() : Deck("ascuns", 0, 0){
+    HiddenBord() : Deck("hidden", 0, 0){
     }
 
 protected:
-    bool validare(Carte *) override {
+    bool validation(Card *) override {
         return true;
     }
 };

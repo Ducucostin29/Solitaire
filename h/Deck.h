@@ -12,37 +12,37 @@
 
 class  Deck {
 public:
-    Deck(const char *nume, int indice, unsigned long long int cartiNecesareCatig){
-        this->nume = nume;
-        this->indice = indice;
-        this->cartiNecesareCatig = cartiNecesareCatig;
+    Deck(const char *name, int index, unsigned long long int cartNeedWin){
+        this->name = name;
+        this->index = index;
+        this->cardsNeed = cartNeedWin;
     }
 
     virtual ~Deck(){
-        for (auto &i: this->carti)
+        for (auto &i: this->cards)
             delete i;
     }
-    bool Adauga_Carte(Carte *carte);
+    bool AddCard(Card *card);
 
     friend std::ostream &operator<<(std::ostream &out, const Deck &deck) {
-        out << deck.nume << " "<< deck.indice+1 << std::endl;
-        for (Carte *const i: deck.carti)
+        out << deck.name << " "<< deck.index+1 << std::endl;
+        for (Card *const i: deck.cards)
             out << "  " << *i;
         return out;
     }
 
-    virtual bool finalizat();
+    virtual bool completed();
 
-    Carte *damiUltimaCarte(){
-        if (this->carti.empty()) { return nullptr; }
-        return this->carti.back();
+    Card *giveLastCard(){
+        if (this->cards.empty()) { return nullptr; }
+        return this->cards.back();
     }
 
 protected:
-    std::string nume;
-    int indice;
-    unsigned long long int cartiNecesareCatig;
-    virtual bool validare(Carte *cart ) =0;
-    std::vector<Carte *> carti;
+    std::string name;
+    int index;
+    unsigned long long int cardsNeed;
+    virtual bool validation(Card *cart) =0;
+    std::vector<Card *> cards;
 };
 #endif //OOP_DECK_H

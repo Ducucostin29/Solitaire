@@ -7,19 +7,19 @@
 
 
 enum Gen {
-    As,
-    Doi [[maybe_unused]],
-    Trei [[maybe_unused]],
-    Patru [[maybe_unused]],
-    Cinci [[maybe_unused]],
-    Sase [[maybe_unused]],
-    Sapte [[maybe_unused]],
-    Opt [[maybe_unused]],
-    Noua [[maybe_unused]],
-    Zece [[maybe_unused]],
-    Juvete [[maybe_unused]],
-    Regina [[maybe_unused]],
-    Rege
+    Ace,
+    Two [[maybe_unused]],
+    Three [[maybe_unused]],
+    Four [[maybe_unused]],
+    Five [[maybe_unused]],
+    Six [[maybe_unused]],
+    Seven [[maybe_unused]],
+    Eight [[maybe_unused]],
+    Nine [[maybe_unused]],
+    Ten [[maybe_unused]],
+    Jack [[maybe_unused]],
+    Queen [[maybe_unused]],
+    King
 };
 
 
