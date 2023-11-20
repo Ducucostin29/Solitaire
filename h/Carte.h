@@ -33,7 +33,7 @@ public:
         } else {
             str << "Cu fata in jos" << std::endl;
         }
-        out << str.str();
+        out << str.str() ;
         return out;
     }
 

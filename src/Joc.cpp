@@ -14,43 +14,43 @@ std::uniform_int_distribution<unsigned long long int> uniformIntDistribution;
 
 void Game::GameInitialization() {
 
-    std::vector<Card *> cards;
+    std::vector<Carte *> cards;
     for (int i = 0; i <= 12; i += 1) {
         for (int j = 0; j <= 3; j += 1) {
-            Card *cart;
-            cart = new Card(Suite(j), Gen(i), true);
+            Carte *cart;
+            cart = new Carte(Suite(j), Gen(i), true);
             cards.push_back(cart);
         }
     }
 
-    std::vector <Card*> cardsGameRandom = Random(cards);
+    std::vector <Carte*> cardsGameRandom = Random(cards);
 
     for (int i = 0; i < 4; i++)
-        this->breed.push_back(new BreedingBord(Suite(i), i));
+        this->breed.push_back(new Deck_Crescator(Suite(i), i));
 
     int c = 0;
     for (int i = 0; i < 7; i++) {
-        std::vector<Card *> cardsInit;
+        std::vector<Carte *> cardsInit;
         for (int j = 0; j <= i; j++) {
             if (j != i )cardsGameRandom[c]->Flip();
 
             cardsInit.push_back(cardsGameRandom[c]);
             c++;
         }
-        this->desc.push_back(new DescendingBord(cardsInit, i));
+        this->desc.push_back(new Deck_Descrescator(cardsInit, i));
     }
 
-    this->hidden = new HiddenBord();
+    this->hidden = new Deck_Ascuns();
     for (long long unsigned int i = c; i < cardsGameRandom.size(); i++) {
         cardsGameRandom[i]->Flip();
-        this->hidden->Deck::AddCard(cardsGameRandom[i]);
+        this->hidden->Deck::Adauga_Carte(cardsGameRandom[i]);
     }
 
 }
 
- std::vector<Card *>Game::Random(const std::vector<Card *> &v) {
+ std::vector<Carte *>Game::Random(const std::vector<Carte *> &v) {
 
-    std::vector<Card *> rando;
+    std::vector<Carte *> rando;
     std::vector<bool> select;
 
     for (unsigned long long int i =0; i < v.size(); i++ ){
@@ -58,7 +58,7 @@ void Game::GameInitialization() {
         rando.push_back(nullptr);
     }
 
-    for(  Card * it : v){
+    for(  Carte * it : v){
         unsigned long long int pozitie = uniformIntDistribution(rng) %  v.size();
         while (select[pozitie]){
             pozitie = uniformIntDistribution(rng) %  v.size();
@@ -70,12 +70,12 @@ void Game::GameInitialization() {
 }
 
 bool Game::Win(){
-    if (!this->hidden->Deck::completed()) return false;
-    for ( BreedingBord* const it : this->breed ){
-        if (!it->completed()) return false;
+    if (!this->hidden->Deck::finalizat()) return false;
+    for ( Deck_Crescator* const it : this->breed ){
+        if (!it->finalizat()) return false;
     }
-    for( DescendingBord* const it : this->desc){
-        if (!it->Deck::completed()) return false;
+    for( Deck_Descrescator* const it : this->desc){
+        if (!it->Deck::finalizat()) return false;
     }
     return true ;
 }
@@ -112,25 +112,25 @@ void Game::MoveCard(){
         int whereFrom;
         std::cin >> whereFrom;
 
-        if (whereFrom < 1) throw MyError((char*)"Deck selected too small. The number must be greater than 0");
-        if (whereFrom > 7) throw MyError((char*)"Deck selected too large. The number must be less than 8");
+        if (whereFrom < 1) throw EroareaMea((char*)"Deck selected too small. The number must be greater than 0");
+        if (whereFrom > 7) throw EroareaMea((char*)"Deck selected too large. The number must be less than 8");
 
         std::cout << "Select where to move: "<<std::endl;
         int unde;
         std::cin >> unde;
 
-        if (unde < 1) throw MyError((char*)"Deck selected too small. The number must be greater than 0");
-        if (unde > 7) throw MyError((char*)"Deck selected too large. The number must be less than 8");
+        if (unde < 1) throw EroareaMea((char*)"Deck selected too small. The number must be greater than 0");
+        if (unde > 7) throw EroareaMea((char*)"Deck selected too large. The number must be less than 8");
 
-        Card* carteSelectata = this->desc[whereFrom-1]->Deck::giveLastCard();
-        if ( this->desc[unde-1]->Deck::AddCard(carteSelectata) ){
+        Carte* carteSelectata = this->desc[whereFrom-1]->Deck::damiUltimaCarte();
+        if ( this->desc[unde-1]->Deck::Adauga_Carte(carteSelectata) ){
             std::cout << "The card was moved successfully " << std::endl;
             std::cout << *this;
         }
-        else throw MyError((char*)"You can not \n");
+        else throw EroareaMea((char*)"You can not \n");
 
-    }catch( MyError &err ){
-        std::cout << "ERROR =" << err.afis();
+    }catch( EroareaMea &err ){
+        std::cout << "ERROR =" << err.afiseaza();
     }
 
     try{
@@ -138,20 +138,20 @@ void Game::MoveCard(){
         int putFrom;
         std::cin>>putFrom;
 
-        if(putFrom<1)throw MyError((char*) "Deck selected too small. The number must be greater than 0");
-        if(putFrom>4) throw MyError((char*)"Deck selected too large. The number must be less than 8");
+        if(putFrom<1)throw EroareaMea((char*) "Deck selected too small. The number must be greater than 0");
+        if(putFrom>4) throw EroareaMea((char*)"Deck selected too large. The number must be less than 8");
 
         std::cout<<"select deck where to put card"<<std::endl;
         int where;
         std::cin>>where;
 
-        Card* cardSelect = this->desc[putFrom-1]->Deck::giveLastCard();
-        if(this->breed[where]->Deck::AddCard(cardSelect)){
+        Carte* cardSelect = this->desc[putFrom-1]->Deck::damiUltimaCarte();
+        if(this->breed[where]->Deck::Adauga_Carte(cardSelect)){
             std::cout<<"The card was moved successfully  "<<std::endl;
             std::cout<<this;}
 
-        else throw MyError((char*)"You can not \n");
+        else throw EroareaMea((char*)"You can not \n");
 
-    }catch(MyError &err){
-        std::cout<<"ERROR ="<<err.afis();}
+    }catch(EroareaMea &err){
+        std::cout<<"ERROR ="<<err.afiseaza();}
 }

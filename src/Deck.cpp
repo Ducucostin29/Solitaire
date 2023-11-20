@@ -12,6 +12,6 @@ bool Deck :: Adauga_Carte(Carte *carte){
     return false;
 }
 
-bool Deck :: finalizat(){
+bool Deck :: finalizat() {
     return this->carti.size() == this->cartiNecesareCatig;
 }

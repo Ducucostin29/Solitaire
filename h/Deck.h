@@ -12,7 +12,7 @@
 
 class  Deck {
 public:
-    Deck(const char *nume, int indice, unsigned long long int cartiNecesareCatig){
+    Deck(const char *nume , int indice, unsigned long long int cartiNecesareCatig){
         this->nume = nume;
         this->indice = indice;
         this->cartiNecesareCatig = cartiNecesareCatig;

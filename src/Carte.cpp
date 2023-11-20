@@ -12,6 +12,6 @@ Suite Carte::GetSuit() {
     return this->suit;
 }
 
-void Carte::Flip() {
+void Carte::Flip(){
     CarteinSus = !CarteinSus;
 }

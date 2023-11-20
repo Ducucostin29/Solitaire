@@ -9,9 +9,9 @@
 
 #include <exception>
 
-class EroareaMea  : public std::exception{
+class EroareaMea : public std::exception{
 public:
-    explicit EroareaMea(char* msg);
+    explicit EroareaMea(char* msg) ;
     char* afiseaza();
 private:
     char* msg;

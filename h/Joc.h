@@ -34,23 +34,23 @@ public:
     friend std::ostream &operator<<(std::ostream &out, const Game &game) {
         out << "joc: " << std::endl;
         out << *game.hidden;
-        for (BreedingBord *const i: game.breed)
+        for (Deck_Crescator *const i: game.breed)
             out << *i;
-        for (DescendingBord *const i: game.desc)
+        for (Deck_Descrescator *const i: game.desc)
             out << *i;
         return out;
     }
 
-    static std::vector<Card *> Random(std::vector<Card *> const &v);
+    static std::vector<Carte *> Random(std::vector<Carte *> const &v);
 
     bool Win();
 
     void Moves();
 
 private:
-    HiddenBord *hidden{};
-    std::vector<BreedingBord *> breed;
-    std::vector<DescendingBord *> desc;
+    Deck_Ascuns *hidden{};
+    std::vector<Deck_Crescator *> breed;
+    std::vector<Deck_Descrescator *> desc;
     void MoveCard();
 };
 

@@ -10,7 +10,7 @@
 #include "Deck.h"
 
 
-class Deck_Ascuns : public Deck {
+class Deck_Ascuns : public Deck{
 public:
     Deck_Ascuns() : Deck("ascuns", 0, 0){
     }

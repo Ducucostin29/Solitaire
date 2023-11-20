@@ -6,7 +6,7 @@
 #define OOP_GEN_H
 
 
-enum Gen {
+enum Gen{
     As,
     Doi [[maybe_unused]],
     Trei [[maybe_unused]],

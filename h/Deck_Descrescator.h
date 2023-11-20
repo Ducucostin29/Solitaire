@@ -23,7 +23,7 @@ public:
     }
 
 protected:
-    bool validare(Carte *cart) override {
+    bool validare(Carte *cart) override{
         if (this->damiUltimaCarte() == nullptr) {
             if (cart->GetGen() == Rege)return true;
         } else if (this->damiUltimaCarte()->GetGen() == cart->GetGen() + 1 &&

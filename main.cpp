@@ -2,7 +2,7 @@
 
 int main() {
 
-    Game *joc;
+    Game *joc ;
     joc = new Game();
     std::cout << *joc;
     joc->Moves();

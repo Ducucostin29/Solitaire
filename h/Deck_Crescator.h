@@ -29,7 +29,7 @@ public:
 protected:
     Suite culoare;
 
-    bool validare(Carte *cart) override {
+    bool validare(Carte *cart) override{
         if (this->culoare != cart->GetSuit())return false;
 
         if (this->damiUltimaCarte() == nullptr) {
