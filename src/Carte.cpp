@@ -4,14 +4,14 @@
 
 #include "../h/Carte.h"
 
-Gen Card::GetGen() {
+Gen Carte::GetGen() {
     return this->gen;
 }
 
-Suite Card::GetSuit() {
+Suite Carte::GetSuit() {
     return this->suit;
 }
 
-void Card::Flip() {
-    cardUp = !cardUp;
+void Carte::Flip() {
+    CarteinSus = !CarteinSus;
 }

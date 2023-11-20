@@ -7,10 +7,12 @@
 
 #include <exception>
 
-class MyError  : public std::exception{
+#include <exception>
+
+class EroareaMea  : public std::exception{
 public:
-    explicit MyError(char* msg);
-    char* afis();
+    explicit EroareaMea(char* msg);
+    char* afiseaza();
 private:
     char* msg;
 };

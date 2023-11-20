@@ -4,7 +4,6 @@
 
 #include "../h/Deck_Ascuns.h"
 
-bool Deck::validation(Card *)  {
+bool Deck::validare(Carte *)  {
     return true;
 }
-

@@ -9,23 +9,28 @@
 #include "MatchOpus.h"
 
 
-class DescendingBord : public Deck {
+#include "Deck.h"
+#include <vector>
+#include "MatchOpus.h"
+
+
+
+class Deck_Descrescator : public Deck {
 public:
-    explicit DescendingBord(const std::vector<Card *> &cardInit, int indice) : Deck("descending", indice, 0) {
-        for (auto i: cardInit)
-            this->cards.push_back(i);
+    explicit Deck_Descrescator(const std::vector<Carte *> &cartiInitiale, int indice) : Deck("descrescator", indice, 0) {
+        for (auto i: cartiInitiale)
+            this->carti.push_back(i);
     }
 
 protected:
-    bool validation(Card *cart) override {
-        if (this->giveLastCard() == nullptr) {
-            if (cart->GetGen() == King)return true;
-        } else if (this->giveLastCard()->GetGen() == cart->GetGen() + 1 &&
-                   matchOpus(cart->GetSuit(), giveLastCard()->GetSuit()))
+    bool validare(Carte *cart) override {
+        if (this->damiUltimaCarte() == nullptr) {
+            if (cart->GetGen() == Rege)return true;
+        } else if (this->damiUltimaCarte()->GetGen() == cart->GetGen() + 1 &&
+                   matchOpus(cart->GetSuit(), damiUltimaCarte()->GetSuit()))
             return true;
         return false;
     }
-
 };
 
 #endif //OOP_DECK_DESCRESCATOR_H

@@ -13,9 +13,9 @@
 
 
 
-class Card {
+class Carte {
 public:
-    Card(Suite s, Gen g, bool cardup) : suit(s), gen(g), cardUp(cardup) {}
+    Carte(Suite s, Gen g, bool carteinsus) : suit(s), gen(g), CarteinSus(carteinsus) {}
 
     Gen GetGen();
 
@@ -23,15 +23,15 @@ public:
 
     void Flip();
 
-    friend std::ostream &operator<<(std::ostream &out, const Card &cart) {
+    friend std::ostream &operator<<(std::ostream &out, const Carte &carte) {
 
         std::ostringstream str;
-        if (cart.cardUp) {
+        if (carte.CarteinSus) {
             const std::string suite[] = {"Inima_Rosie", "Romb", "Trefla", "Inima_Neagra"};
             const std::string gene[] = {"As", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
-            str << gene[cart.gen] << " " << suite[cart.suit] <<std::endl;
+            str << gene[carte.gen] << " " << suite[carte.suit] << std::endl;
         } else {
-            str << "Face down" << std::endl;
+            str << "Cu fata in jos" << std::endl;
         }
         out << str.str();
         return out;
@@ -40,6 +40,6 @@ public:
 private:
     Suite suit;
     Gen gen;
-    bool cardUp;
+    bool CarteinSus;
 };
 #endif //OOP_CARTE_H
