@@ -93,12 +93,14 @@ void Game::Moves(){
             continue;
         }
 
-        std::cout << "Do you want to move a card? y/n" << std::endl;
+        std::cout << "Do you want to move a card? 1/2/3" << std::endl;
         std::string opt;
         std::cin >> opt;
-        if ( opt == "y")
+        if ( opt == "1")
             this->MoveCard();
-        if (opt == "n")
+        if( opt == "2")
+            this->MoveCard2();
+        if (opt == "3")
             break;
 
         return;
@@ -106,52 +108,52 @@ void Game::Moves(){
     }
 }
 
-void Game::MoveCard(){
-    try{
-        std::cout << "Select where to move: "<< std::endl;
+void Game::MoveCard() {
+    try {
+        std::cout << "Select where to move: " << std::endl;
         int whereFrom;
         std::cin >> whereFrom;
 
-        if (whereFrom < 1) throw EroareaMea((char*)"Deck selected too small. The number must be greater than 0");
-        if (whereFrom > 7) throw EroareaMea((char*)"Deck selected too large. The number must be less than 8");
+        if (whereFrom < 1) throw EroareaMea((char *) "Deck selected too small. The number must be greater than 0");
+        if (whereFrom > 7) throw EroareaMea((char *) "Deck selected too large. The number must be less than 8");
 
-        std::cout << "Select where to move: "<<std::endl;
+        std::cout << "Select where to move: " << std::endl;
         int unde;
         std::cin >> unde;
 
-        if (unde < 1) throw EroareaMea((char*)"Deck selected too small. The number must be greater than 0");
-        if (unde > 7) throw EroareaMea((char*)"Deck selected too large. The number must be less than 8");
+        if (unde < 1) throw EroareaMea((char *) "Deck selected too small. The number must be greater than 0");
+        if (unde > 7) throw EroareaMea((char *) "Deck selected too large. The number must be less than 8");
 
-        Carte* carteSelectata = this->desc[whereFrom-1]->Deck::damiUltimaCarte();
-        if ( this->desc[unde-1]->Deck::Adauga_Carte(carteSelectata) ){
+        Carte *carteSelectata = this->desc[whereFrom - 1]->Deck::damiUltimaCarte();
+        if (this->desc[unde - 1]->Deck::Adauga_Carte(carteSelectata)) {
             std::cout << "The card was moved successfully " << std::endl;
             std::cout << *this;
-        }
-        else throw EroareaMea((char*)"You can not \n");
+        } else throw EroareaMea((char *) "You can not \n");
 
-    }catch( EroareaMea &err ){
+    } catch (EroareaMea &err) {
         std::cout << "ERROR =" << err.afiseaza();
     }
-
-    try{
-        std::cout<<"Select where to move:"<<std::endl;
+}
+void Game::MoveCard2(){
+    try {
+        std::cout << "Select where to move:" << std::endl;
         int putFrom;
-        std::cin>>putFrom;
+        std::cin >> putFrom;
 
-        if(putFrom<1)throw EroareaMea((char*) "Deck selected too small. The number must be greater than 0");
-        if(putFrom>4) throw EroareaMea((char*)"Deck selected too large. The number must be less than 8");
+        if (putFrom < 1)throw EroareaMea((char *) "Deck selected too small. The number must be greater than 0");
+        if (putFrom > 4) throw EroareaMea((char *) "Deck selected too large. The number must be less than 8");
 
-        std::cout<<"select deck where to put card"<<std::endl;
+        std::cout << "select deck where to put card" << std::endl;
         int where;
-        std::cin>>where;
+        std::cin >> where;
 
-        Carte* cardSelect = this->desc[putFrom-1]->Deck::damiUltimaCarte();
-        if(this->breed[where]->Deck::Adauga_Carte(cardSelect)){
-            std::cout<<"The card was moved successfully  "<<std::endl;
-            std::cout<<this;}
+        Carte *cardSelect = this->desc[putFrom - 1]->Deck::damiUltimaCarte();
+        if (this->breed[where]->Deck::Adauga_Carte(cardSelect)) {
+            std::cout << "The card was moved successfully  " << std::endl;
+            std::cout << this;
+        } else throw EroareaMea((char *) "You can not \n");
 
-        else throw EroareaMea((char*)"You can not \n");
-
-    }catch(EroareaMea &err){
-        std::cout<<"ERROR ="<<err.afiseaza();}
+    } catch (EroareaMea &err) {
+        std::cout << "ERROR =" << err.afiseaza();
+    }
 }

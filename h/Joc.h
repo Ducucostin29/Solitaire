@@ -52,6 +52,7 @@ private:
     std::vector<Deck_Crescator *> breed;
     std::vector<Deck_Descrescator *> desc;
     void MoveCard();
+    void MoveCard2();
 };
 
 

@@ -27,8 +27,8 @@ public:
 
         std::ostringstream str;
         if (carte.CarteinSus) {
-            const std::string suite[] = {"Inima_Rosie", "Romb", "Trefla", "Inima_Neagra"};
-            const std::string gene[] = {"As", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
+            const std::string suite[] = {"Red_Heart", "Diamond", "Club", "Black_Heart"};
+            const std::string gene[] = {"Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
             str << gene[carte.gen] << " " << suite[carte.suit] << std::endl;
         } else {
             str << "Cu fata in jos" << std::endl;
