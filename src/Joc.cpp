@@ -125,12 +125,18 @@ void Game::MoveCard() {
         if (unde > 7) throw EroareaMea((char *) "Deck selected too large. The number must be less than 8");
 
         Carte *carteSelectata = this->desc[whereFrom - 1]->Deck::damiUltimaCarte();
-        if (this->desc[unde - 1]->Deck::Adauga_Carte(carteSelectata)) {
-            std::cout << "The card was moved successfully " << std::endl;
-            std::cout << *this;
-        } else throw EroareaMea((char *) "You can not \n");
-
-    } catch (EroareaMea &err) {
+        auto* descDeck = dynamic_cast<Deck_Descrescator*>(this->desc[unde - 1]);
+        if (descDeck) {
+            if (descDeck->Adauga_Carte(carteSelectata)) {
+                std::cout << "The card was moved successfully " << std::endl;
+                std::cout << *this;
+            } else {
+                throw EroareaMea((char*) "You can not \n");
+            }
+        } else {
+            throw EroareaMea((char*) "Invalid deck type selected\n");
+        }
+    } catch (EroareaMea& err) {
         std::cout << "ERROR =" << err.afiseaza();
     }
 }
@@ -148,12 +154,19 @@ void Game::MoveCard2(){
         std::cin >> where;
 
         Carte *cardSelect = this->desc[putFrom - 1]->Deck::damiUltimaCarte();
-        if (this->breed[where]->Deck::Adauga_Carte(cardSelect)) {
-            std::cout << "The card was moved successfully  " << std::endl;
-            std::cout << this;
-        } else throw EroareaMea((char *) "You can not \n");
+        auto* breedDeck = dynamic_cast<Deck_Crescator*>(this->breed[where]);
 
-    } catch (EroareaMea &err) {
+        if (breedDeck) {
+            if (breedDeck->Adauga_Carte(cardSelect)) {
+                std::cout << "The card was moved successfully  " << std::endl;
+                std::cout << this;
+            } else {
+                throw EroareaMea((char*) "You can not \n");
+            }
+        } else {
+            throw EroareaMea((char*) "Invalid deck type selected\n");
+        }
+    } catch (EroareaMea& err) {
         std::cout << "ERROR =" << err.afiseaza();
     }
 }
