@@ -91,7 +91,6 @@ endfunction()
 
 # NOTE: update executable name in .github/workflows/cmake.yml:25 when changing name here
 add_executable(${PROJECT_NAME} main.cpp
-        src/EroareaMea.cpp
         src/Carte.cpp
         h/MatchOpus.h
         h/Deck.h
@@ -105,7 +104,7 @@ add_executable(${PROJECT_NAME} main.cpp
         h/Joc.h
         src/Joc.cpp
         h/MyVector.h
-        src/MyVector.cpp)
+)
 
 ###############################################################################
 
