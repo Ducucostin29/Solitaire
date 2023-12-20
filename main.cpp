@@ -4,23 +4,25 @@
 
 int main() {
 
-    MyVector<int> *v = new MyVector<int>();
+    auto *v = new MyVector<int>();
     v->clear();
-    v->push_back(876);
-    v->push_back(2876);
-    v->push_back(3876);
-    v->push_back(8576);
-    v->push_back(8276);
+    v->push_back(1);
+    v->push_back(2);
+    v->push_back(3);
+    v->push_back(4);
+    v->push_back(5);
     std::cout << *v << std::endl;
 
-    MyList <int> *l = new MyList<int>();
-    l->push_back(876);
-    l->push_back(2876);
-    l->push_back(3876);
-    l->push_back(8576);
-    l->push_back(8276);
+    auto *l = new MyList<int>();
+    l->push_back(10);
+    l->push_back(20);
+    l->push_back(30);
+    l->push_back(40);
+    l->push_back(50);
     std::cout << *l << std::endl ;
-    std::cout << "element de pe pozitia 3" << (*l)[2] << std::endl;
+    std::cout << "element de pe pozitia 3 " << (*l)[2] << std::endl;
+    std::cout << "lungime lista " << l->size() << std::endl;
+    std::cout << "ultimul element " << l->back() << std::endl;
 
     Game *joc ;
     joc = new Game();
