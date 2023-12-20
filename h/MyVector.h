@@ -18,7 +18,7 @@ public:
         this->clear();
     }
     ~MyVector() {
-        this->clear();
+        free(this->point);
     };
     void clear(){
         if (this->point != nullptr)
