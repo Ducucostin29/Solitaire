@@ -12,6 +12,7 @@ int main() {
     v->push_back(4);
     v->push_back(5);
     std::cout << *v << std::endl;
+    delete v;
 
     auto *l = new MyList<int>();
     l->push_back(10);
@@ -23,6 +24,7 @@ int main() {
     std::cout << "element de pe pozitia 3 " << (*l)[2] << std::endl;
     std::cout << "lungime lista " << l->size() << std::endl;
     std::cout << "ultimul element " << l->back() << std::endl;
+    delete l;
 
     Game *joc ;
     joc = new Game();
@@ -35,6 +37,7 @@ int main() {
 //    std::cout << *v2;
 //    std::cout << " element pe v0"  << *(*v2)[0];
 //    v2->clear();
+//    delete v2
 
     delete joc;
     return 0;
