@@ -14,10 +14,15 @@ private:
     size_t n{};
 public:
     MyVector(){
+        this->point= nullptr;
         this->clear();
     }
-    ~MyVector()= default;
+    ~MyVector() {
+        this->clear();
+    };
     void clear(){
+        if (this->point != nullptr)
+            free(this->point);
         this->point= (T*) calloc(0,sizeof (T));
         this->n=0;
     }
