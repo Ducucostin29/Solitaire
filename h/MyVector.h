@@ -38,7 +38,7 @@ public:
         return this->point[i];
     }
     bool empty(){
-        return this->n=0;
+        return this->n==0;
     }
     T back(){
         if(this->empty())throw EroareaMea<char*>((char*) "Imposibil \n");
