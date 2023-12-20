@@ -74,6 +74,7 @@ public:
             it = it->next;
             i--;
         }
+        throw EroareaMea<char*>((char*) "Imposibil \n");
     }
 
     T back(){
