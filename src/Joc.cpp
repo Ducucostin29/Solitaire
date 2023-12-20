@@ -71,12 +71,12 @@ void Game::GameInitialization() {
 
 bool Game::Win(){
     if (!this->hidden->Deck::finalizat()) return false;
-    for ( Deck_Crescator* const it : this->breed ){
-        if (!it->finalizat()) return false;
-    }
-    for( Deck_Descrescator* const it : this->desc){
-        if (!it->Deck::finalizat()) return false;
-    }
+    for(size_t i=0;i<this->breed.size();i++)
+        if (!this->breed[i]->finalizat()) return false;
+
+    for(size_t i=0;i<this->desc.size();i++)
+        if (!this->desc[i]->Deck::finalizat()) return false;
+
     return true ;
 }
 

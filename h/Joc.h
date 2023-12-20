@@ -34,10 +34,10 @@ public:
     friend std::ostream &operator<<(std::ostream &out, const Game &game) {
         out << "joc: " << std::endl;
         out << *game.hidden;
-        for (Deck_Crescator *const i: game.breed)
-            out << *i;
-        for (Deck_Descrescator *const i: game.desc)
-            out << *i;
+        for(size_t i=0;i<game.breed.size();i++)
+            out<<*game.breed[i];
+        for(size_t i=0;i<game.desc.size();i++)
+            out<<*game.desc[i];
         return out;
     }
 
@@ -49,8 +49,8 @@ public:
 
 private:
     Deck_Ascuns *hidden{};
-    std::vector<Deck_Crescator *> breed;
-    std::vector<Deck_Descrescator *> desc;
+    MyVector<Deck_Crescator *> breed;
+    MyVector<Deck_Descrescator *> desc;
     void MoveCard();
     void MoveCard2();
 };
