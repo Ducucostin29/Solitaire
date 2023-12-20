@@ -114,15 +114,15 @@ void Game::MoveCard() {
         int whereFrom;
         std::cin >> whereFrom;
 
-        if (whereFrom < 1) throw EroareaMea((char *) "Deck selected too small. The number must be greater than 0");
-        if (whereFrom > 7) throw EroareaMea((char *) "Deck selected too large. The number must be less than 8");
+        if (whereFrom < 1) throw EroareaMea<char*>((char *) "Deck selected too small. The number must be greater than 0");
+        if (whereFrom > 7) throw EroareaMea<char*>((char *) "Deck selected too large. The number must be less than 8");
 
         std::cout << "Select where to move: " << std::endl;
         int unde;
         std::cin >> unde;
 
-        if (unde < 1) throw EroareaMea((char *) "Deck selected too small. The number must be greater than 0");
-        if (unde > 7) throw EroareaMea((char *) "Deck selected too large. The number must be less than 8");
+        if (unde < 1) throw EroareaMea<char*>((char *) "Deck selected too small. The number must be greater than 0");
+        if (unde > 7) throw EroareaMea<char*>((char *) "Deck selected too large. The number must be less than 8");
 
         Carte *carteSelectata = this->desc[whereFrom - 1]->Deck::damiUltimaCarte();
         auto* descDeck = dynamic_cast<Deck_Descrescator*>(this->desc[unde - 1]);
@@ -136,7 +136,7 @@ void Game::MoveCard() {
         } else {
             throw EroareaMea((char*) "Invalid deck type selected\n");
         }
-    } catch (EroareaMea& err) {
+    } catch (EroareaMea<char*>& err) {
         std::cout << "ERROR =" << err.afiseaza();
     }
 }
@@ -146,8 +146,8 @@ void Game::MoveCard2(){
         int putFrom;
         std::cin >> putFrom;
 
-        if (putFrom < 1)throw EroareaMea((char *) "Deck selected too small. The number must be greater than 0");
-        if (putFrom > 4) throw EroareaMea((char *) "Deck selected too large. The number must be less than 8");
+        if (putFrom < 1)throw EroareaMea<char*>((char *) "Deck selected too small. The number must be greater than 0");
+        if (putFrom > 4) throw EroareaMea<char*>((char *) "Deck selected too large. The number must be less than 8");
 
         std::cout << "select deck where to put card" << std::endl;
         int where;
@@ -161,12 +161,12 @@ void Game::MoveCard2(){
                 std::cout << "The card was moved successfully  " << std::endl;
                 std::cout << this;
             } else {
-                throw EroareaMea((char*) "You can not \n");
+                throw EroareaMea<char*>((char*) "You can not \n");
             }
         } else {
-            throw EroareaMea((char*) "Invalid deck type selected\n");
+            throw EroareaMea<char*>((char*) "Invalid deck type selected\n");
         }
-    } catch (EroareaMea& err) {
+    } catch (EroareaMea<char*>& err) {
         std::cout << "ERROR =" << err.afiseaza();
     }
 }

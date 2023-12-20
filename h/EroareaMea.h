@@ -7,12 +7,16 @@
 
 #include <exception>
 
-class EroareaMea : public std::exception{
+template <typename  T> class EroareaMea : public std::exception{
 public:
-    explicit EroareaMea(char* msg) ;
-    char* afiseaza();
+    explicit EroareaMea(T msg){
+        this->mesaj = msg;
+    };
+    T afiseaza(){
+        return this->mesaj;
+    }
 private:
-    char* msg;
+    T mesaj;
 };
 
 

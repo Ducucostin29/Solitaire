@@ -103,7 +103,9 @@ add_executable(${PROJECT_NAME} main.cpp
         h/Deck_Descrescator.h
         src/Deck_Descrescator.cpp
         h/Joc.h
-        src/Joc.cpp)
+        src/Joc.cpp
+        h/MyVector.h
+        src/MyVector.cpp)
 
 ###############################################################################
 
