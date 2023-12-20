@@ -104,6 +104,8 @@ add_executable(${PROJECT_NAME} main.cpp
         h/Joc.h
         src/Joc.cpp
         h/MyVector.h
+        h/MyList.h
+        src/MyList.cpp
 )
 
 ###############################################################################

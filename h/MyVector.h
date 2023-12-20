@@ -32,7 +32,7 @@ public:
         this->n++;
         this->point[this->n-1]=obj;
     }
-    friend std::ostream &operator<<(std::ostream &out, const MyVector<T> myVector){
+    friend std::ostream &operator<<(std::ostream &out, const MyVector<T> &myVector){
         for(int i=0;i<myVector.n;i++)
             out << "  " << myVector.point[i];
         return out;
